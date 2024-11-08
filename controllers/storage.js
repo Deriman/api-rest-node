@@ -1,13 +1,17 @@
-const { trackModel } = require('../models')
+const { storageModel } = require('../models')
 
 const readItems = async (req, res) => {
-    const data = await trackModel.find({})
+    const data = await storageModel.find({})
     res.send({ data })
 }
 const readItem = (req, res) => {}
 const createItem = async (req, res) => {
-    const body = req.body;
-    const data = await trackModel.create(body)
+    const { file } = req
+    const fileData = {
+        filename: file.filename,
+        url:`${process.env.PUBLIC_URI}/${file.filename}`
+    }
+    const data = await storageModel.create(fileData)
     res.send({ data })
 }
 const updateItem = (req, res) => {}
